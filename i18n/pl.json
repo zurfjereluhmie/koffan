@@ -1,0 +1,74 @@
+{
+  "meta": {
+    "code": "pl",
+    "name": "Polski",
+    "flag": "PL"
+  },
+  "common": {
+    "add": "Dodaj",
+    "cancel": "Anuluj",
+    "save": "Zapisz",
+    "delete": "Usuń",
+    "edit": "Edytuj",
+    "close": "Zamknij"
+  },
+  "nav": {
+    "settings": "Ustawienia",
+    "logout": "Wyloguj"
+  },
+  "list": {
+    "title": "Lista Zakupów",
+    "empty_list": "pusta lista",
+    "shopping_list": "Lista zakupów",
+    "completed": "gotowe",
+    "bought": "Kupione"
+  },
+  "items": {
+    "what_to_buy": "Co kupić?",
+    "note": "Notatka...",
+    "note_optional": "Notatka (opcjonalnie)...",
+    "name": "Nazwa...",
+    "new_product": "Nowy produkt",
+    "select_section": "Wybierz sekcję...",
+    "section": "Sekcja..."
+  },
+  "sections": {
+    "title": "Sekcje",
+    "new_section": "Nowa sekcja...",
+    "section_list": "Lista sekcji",
+    "manage": "Zarządzaj sekcjami",
+    "select": "Wybierz",
+    "no_sections": "Brak sekcji",
+    "add_first_section": "Dodaj pierwszą sekcję aby rozpocząć"
+  },
+  "actions": {
+    "move_up": "W górę",
+    "move_down": "W dół",
+    "move": "Przenieś",
+    "uncertain": "Niepewne",
+    "certain": "Pewne",
+    "remove_mark": "Usuń oznaczenie",
+    "mark_uncertain": "Oznacz jako niepewne"
+  },
+  "settings": {
+    "title": "Ustawienia",
+    "language": "Język",
+    "coming_soon": "Wkrótce...",
+    "sponsor": "Chcesz wesprzeć rozwój aplikacji? Dorzuć do koszyka!",
+    "report_bug": "Coś nie działa? Daj znać!"
+  },
+  "login": {
+    "title": "Logowanie - Lista Zakupów",
+    "subtitle": "Zaloguj się aby kontynuować",
+    "password": "Hasło",
+    "password_placeholder": "Wpisz hasło...",
+    "submit": "Zaloguj",
+    "error_invalid": "Nieprawidłowe hasło",
+    "error_rate_limited": "Zbyt wiele prób logowania. Spróbuj ponownie później."
+  },
+  "confirm": {
+    "delete_item": "Usunąć \"{{name}}\"?",
+    "delete_sections": "Usunąć {{count}} wybranych sekcji?",
+    "delete_section": "Usunąć sekcję '{{name}}'?"
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "meta": {
+    "code": "pt",
+    "name": "Português",
+    "flag": "PT"
+  },
+  "common": {
+    "add": "Adicionar",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "close": "Fechar"
+  },
+  "nav": {
+    "settings": "Definições",
+    "logout": "Terminar sessão"
+  },
+  "list": {
+    "title": "Lista de compras",
+    "empty_list": "lista vazia",
+    "shopping_list": "Lista de compras",
+    "completed": "concluído",
+    "bought": "Comprado"
+  },
+  "items": {
+    "what_to_buy": "O que comprar?",
+    "note": "Nota...",
+    "note_optional": "Nota (opcional)...",
+    "name": "Nome...",
+    "new_product": "Novo produto",
+    "select_section": "Selecionar secção...",
+    "section": "Secção..."
+  },
+  "sections": {
+    "title": "Secções",
+    "new_section": "Nova secção...",
+    "section_list": "Lista de secções",
+    "manage": "Gerir secções",
+    "select": "Selecionar",
+    "no_sections": "Sem secções",
+    "add_first_section": "Adicione a sua primeira secção para começar"
+  },
+  "actions": {
+    "move_up": "Subir",
+    "move_down": "Descer",
+    "move": "Mover",
+    "uncertain": "Incerto",
+    "certain": "Certo",
+    "remove_mark": "Remover marca",
+    "mark_uncertain": "Marcar como incerto"
+  },
+  "settings": {
+    "title": "Definições",
+    "language": "Idioma",
+    "coming_soon": "Em breve...",
+    "sponsor": "Quer apoiar o app? Adicione ao carrinho!",
+    "report_bug": "Encontrou um erro? Avise-me!"
+  },
+  "login": {
+    "title": "Iniciar sessão - Lista de compras",
+    "subtitle": "Inicie sessão para continuar",
+    "password": "Palavra-passe",
+    "password_placeholder": "Introduza a palavra-passe...",
+    "submit": "Iniciar sessão",
+    "error_invalid": "Palavra-passe incorreta",
+    "error_rate_limited": "Demasiadas tentativas de login. Tente novamente mais tarde."
+  },
+  "confirm": {
+    "delete_item": "Eliminar \"{{name}}\"?",
+    "delete_sections": "Eliminar {{count}} secções selecionadas?",
+    "delete_section": "Eliminar secção '{{name}}'?"
+  }
+}

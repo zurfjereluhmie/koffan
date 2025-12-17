@@ -1,0 +1,74 @@
+{
+  "meta": {
+    "code": "en",
+    "name": "English",
+    "flag": "EN"
+  },
+  "common": {
+    "add": "Add",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close"
+  },
+  "nav": {
+    "settings": "Settings",
+    "logout": "Log out"
+  },
+  "list": {
+    "title": "Shopping List",
+    "empty_list": "empty list",
+    "shopping_list": "Shopping list",
+    "completed": "done",
+    "bought": "Bought"
+  },
+  "items": {
+    "what_to_buy": "What to buy?",
+    "note": "Note...",
+    "note_optional": "Note (optional)...",
+    "name": "Name...",
+    "new_product": "New product",
+    "select_section": "Select section...",
+    "section": "Section..."
+  },
+  "sections": {
+    "title": "Sections",
+    "new_section": "New section...",
+    "section_list": "Section list",
+    "manage": "Manage sections",
+    "select": "Select",
+    "no_sections": "No sections",
+    "add_first_section": "Add your first section to get started"
+  },
+  "actions": {
+    "move_up": "Move up",
+    "move_down": "Move down",
+    "move": "Move",
+    "uncertain": "Uncertain",
+    "certain": "Certain",
+    "remove_mark": "Remove mark",
+    "mark_uncertain": "Mark as uncertain"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "coming_soon": "Coming soon...",
+    "sponsor": "Want to support the app? Add to cart!",
+    "report_bug": "Found a bug? Let me know!"
+  },
+  "login": {
+    "title": "Login - Shopping List",
+    "subtitle": "Log in to continue",
+    "password": "Password",
+    "password_placeholder": "Enter password...",
+    "submit": "Log in",
+    "error_invalid": "Invalid password",
+    "error_rate_limited": "Too many login attempts. Please try again later."
+  },
+  "confirm": {
+    "delete_item": "Delete \"{{name}}\"?",
+    "delete_sections": "Delete {{count}} selected sections?",
+    "delete_section": "Delete section '{{name}}'?"
+  }
+}

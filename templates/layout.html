@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista Zakupow</title>
+
+    <!-- Favicon & PWA -->
+    <link rel="icon" type="image/png" href="/static/favicon-96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/static/icon-192.png" sizes="192x192">
+    <link rel="icon" href="/static/favicon.ico" sizes="48x48">
+    <link rel="apple-touch-icon" href="/static/apple-touch-icon.png">
+    <link rel="manifest" href="/static/manifest.json">
+    <meta name="theme-color" content="#3b82f6">
+
+    <!-- i18n translations -->
+    <script>
+        window.translations = {{.Translations | toJSON}};
+        window.locales = {{.Locales | toJSON}};
+
+        // Detect language: localStorage > browser > fallback 'pl'
+        (function() {
+            const stored = localStorage.getItem('language');
+            if (stored && window.translations[stored]) {
+                window.currentLang = stored;
+                return;
+            }
+
+            // Detect browser language (e.g., "pl-PL" -> "pl")
+            const browserLang = (navigator.language || navigator.userLanguage || 'pl').split('-')[0].toLowerCase();
+
+            // Check if browser language is available
+            if (window.translations[browserLang]) {
+                window.currentLang = browserLang;
+            } else {
+                window.currentLang = 'pl';
+            }
+        })();
+
+        // Translation helper function
+        function t(key, params) {
+            const lang = window.currentLang;
+            const keys = key.split('.');
+            let value = window.translations[lang];
+
+            for (const k of keys) {
+                if (value && typeof value === 'object' && k in value) {
+                    value = value[k];
+                } else {
+                    return key;
+                }
+            }
+
+            if (typeof value !== 'string') return key;
+
+            // Replace {{ "{{" }}param{{ "}}" }} placeholders
+            if (params) {
+                return value.replace(/\{\{(\w+)\}\}/g, (match, param) => {
+                    return params[param] !== undefined ? params[param] : match;
+                });
+            }
+            return value;
+        }
+
+        // Language change helper
+        function changeLanguage(lang) {
+            localStorage.setItem('language', lang);
+            window.location.reload();
+        }
+    </script>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3b82f6',
+                        uncertain: '#fef3c7',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- HTMX -->
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.10/dist/ext/ws.js"></script>
+
+    <!-- Alpine.js + Collapse plugin -->
+    <script defer src="https://unpkg.com/@alpinejs/collapse@3.13.5/dist/cdn.min.js"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.13.5/dist/cdn.min.js"></script>
+
+    <style>
+        [x-cloak] { display: none !important; }
+        .htmx-request .htmx-indicator { display: inline-block; }
+        .htmx-indicator { display: none; }
+
+        /* HTMX animations */
+        .htmx-added {
+            animation: slideIn 0.25s ease-out;
+        }
+        .htmx-swapping {
+            opacity: 0;
+            transition: opacity 0.15s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Item animations */
+        .item-enter {
+            animation: itemEnter 0.3s ease-out;
+        }
+        @keyframes itemEnter {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .item-exit {
+            animation: itemExit 0.2s ease-in forwards;
+        }
+        @keyframes itemExit {
+            to {
+                opacity: 0;
+                transform: translateX(20px) scale(0.95);
+            }
+        }
+
+        /* Checkbox pulse */
+        .checkbox-pulse {
+            animation: pulse 0.3s ease-out;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        /* Section fade */
+        .section-fade {
+            animation: sectionFade 0.3s ease-out;
+        }
+        @keyframes sectionFade {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Smooth list refresh - prevents flash */
+        #sections-list {
+            transition: opacity 0.15s ease-out;
+        }
+        #sections-list.htmx-request {
+            opacity: 0.7;
+        }
+
+        /* Disable animations during move */
+        .moving-item {
+            animation: none !important;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    {{embed}}
+
+    <script src="/static/app.js?v=1702824008"></script>
+</body>
+</html>

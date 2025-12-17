@@ -1,0 +1,74 @@
+{
+  "meta": {
+    "code": "de",
+    "name": "Deutsch",
+    "flag": "DE"
+  },
+  "common": {
+    "add": "Hinzufügen",
+    "cancel": "Abbrechen",
+    "save": "Speichern",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "close": "Schließen"
+  },
+  "nav": {
+    "settings": "Einstellungen",
+    "logout": "Abmelden"
+  },
+  "list": {
+    "title": "Einkaufsliste",
+    "empty_list": "leere Liste",
+    "shopping_list": "Einkaufsliste",
+    "completed": "erledigt",
+    "bought": "Gekauft"
+  },
+  "items": {
+    "what_to_buy": "Was kaufen?",
+    "note": "Notiz...",
+    "note_optional": "Notiz (optional)...",
+    "name": "Name...",
+    "new_product": "Neues Produkt",
+    "select_section": "Abteilung wählen...",
+    "section": "Abteilung..."
+  },
+  "sections": {
+    "title": "Abteilungen",
+    "new_section": "Neue Abteilung...",
+    "section_list": "Abteilungsliste",
+    "manage": "Abteilungen verwalten",
+    "select": "Auswählen",
+    "no_sections": "Keine Abteilungen",
+    "add_first_section": "Fügen Sie Ihre erste Abteilung hinzu"
+  },
+  "actions": {
+    "move_up": "Nach oben",
+    "move_down": "Nach unten",
+    "move": "Verschieben",
+    "uncertain": "Unsicher",
+    "certain": "Sicher",
+    "remove_mark": "Markierung entfernen",
+    "mark_uncertain": "Als unsicher markieren"
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "language": "Sprache",
+    "coming_soon": "Demnächst verfügbar...",
+    "sponsor": "Möchtest du die App unterstützen? Ab in den Warenkorb!",
+    "report_bug": "Fehler gefunden? Sag Bescheid!"
+  },
+  "login": {
+    "title": "Anmeldung - Einkaufsliste",
+    "subtitle": "Melden Sie sich an, um fortzufahren",
+    "password": "Passwort",
+    "password_placeholder": "Passwort eingeben...",
+    "submit": "Anmelden",
+    "error_invalid": "Ungültiges Passwort",
+    "error_rate_limited": "Zu viele Anmeldeversuche. Bitte versuchen Sie es später erneut."
+  },
+  "confirm": {
+    "delete_item": "\"{{name}}\" löschen?",
+    "delete_sections": "{{count}} ausgewählte Abteilungen löschen?",
+    "delete_section": "Abteilung '{{name}}' löschen?"
+  }
+}

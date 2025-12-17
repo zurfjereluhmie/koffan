@@ -1,0 +1,74 @@
+{
+  "meta": {
+    "code": "es",
+    "name": "Español",
+    "flag": "ES"
+  },
+  "common": {
+    "add": "Añadir",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "close": "Cerrar"
+  },
+  "nav": {
+    "settings": "Ajustes",
+    "logout": "Cerrar sesión"
+  },
+  "list": {
+    "title": "Lista de compras",
+    "empty_list": "lista vacía",
+    "shopping_list": "Lista de compras",
+    "completed": "completado",
+    "bought": "Comprado"
+  },
+  "items": {
+    "what_to_buy": "¿Qué comprar?",
+    "note": "Nota...",
+    "note_optional": "Nota (opcional)...",
+    "name": "Nombre...",
+    "new_product": "Nuevo producto",
+    "select_section": "Seleccionar sección...",
+    "section": "Sección..."
+  },
+  "sections": {
+    "title": "Secciones",
+    "new_section": "Nueva sección...",
+    "section_list": "Lista de secciones",
+    "manage": "Gestionar secciones",
+    "select": "Seleccionar",
+    "no_sections": "Sin secciones",
+    "add_first_section": "Añade tu primera sección para empezar"
+  },
+  "actions": {
+    "move_up": "Subir",
+    "move_down": "Bajar",
+    "move": "Mover",
+    "uncertain": "Incierto",
+    "certain": "Seguro",
+    "remove_mark": "Quitar marca",
+    "mark_uncertain": "Marcar como incierto"
+  },
+  "settings": {
+    "title": "Ajustes",
+    "language": "Idioma",
+    "coming_soon": "Próximamente...",
+    "sponsor": "¿Quieres apoyar la app? ¡Añade al carrito!",
+    "report_bug": "¿Encontraste un error? ¡Avísame!"
+  },
+  "login": {
+    "title": "Iniciar sesión - Lista de compras",
+    "subtitle": "Inicia sesión para continuar",
+    "password": "Contraseña",
+    "password_placeholder": "Introduce la contraseña...",
+    "submit": "Iniciar sesión",
+    "error_invalid": "Contraseña incorrecta",
+    "error_rate_limited": "Demasiados intentos de inicio de sesión. Inténtalo de nuevo más tarde."
+  },
+  "confirm": {
+    "delete_item": "¿Eliminar \"{{name}}\"?",
+    "delete_sections": "¿Eliminar {{count}} secciones seleccionadas?",
+    "delete_section": "¿Eliminar sección '{{name}}'?"
+  }
+}

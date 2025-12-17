@@ -1,0 +1,74 @@
+{
+  "meta": {
+    "code": "fr",
+    "name": "Français",
+    "flag": "FR"
+  },
+  "common": {
+    "add": "Ajouter",
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "close": "Fermer"
+  },
+  "nav": {
+    "settings": "Paramètres",
+    "logout": "Déconnexion"
+  },
+  "list": {
+    "title": "Liste de courses",
+    "empty_list": "liste vide",
+    "shopping_list": "Liste de courses",
+    "completed": "terminé",
+    "bought": "Acheté"
+  },
+  "items": {
+    "what_to_buy": "Qu'acheter ?",
+    "note": "Note...",
+    "note_optional": "Note (facultatif)...",
+    "name": "Nom...",
+    "new_product": "Nouveau produit",
+    "select_section": "Choisir un rayon...",
+    "section": "Rayon..."
+  },
+  "sections": {
+    "title": "Rayons",
+    "new_section": "Nouveau rayon...",
+    "section_list": "Liste des rayons",
+    "manage": "Gérer les rayons",
+    "select": "Sélectionner",
+    "no_sections": "Aucun rayon",
+    "add_first_section": "Ajoutez votre premier rayon pour commencer"
+  },
+  "actions": {
+    "move_up": "Monter",
+    "move_down": "Descendre",
+    "move": "Déplacer",
+    "uncertain": "Incertain",
+    "certain": "Certain",
+    "remove_mark": "Retirer le marquage",
+    "mark_uncertain": "Marquer comme incertain"
+  },
+  "settings": {
+    "title": "Paramètres",
+    "language": "Langue",
+    "coming_soon": "Bientôt disponible...",
+    "sponsor": "Tu veux soutenir l'appli ? Ajoute au panier !",
+    "report_bug": "Un bug ? Fais-le moi savoir !"
+  },
+  "login": {
+    "title": "Connexion - Liste de courses",
+    "subtitle": "Connectez-vous pour continuer",
+    "password": "Mot de passe",
+    "password_placeholder": "Entrez le mot de passe...",
+    "submit": "Se connecter",
+    "error_invalid": "Mot de passe invalide",
+    "error_rate_limited": "Trop de tentatives de connexion. Veuillez réessayer plus tard."
+  },
+  "confirm": {
+    "delete_item": "Supprimer \"{{name}}\" ?",
+    "delete_sections": "Supprimer {{count}} rayons sélectionnés ?",
+    "delete_section": "Supprimer le rayon '{{name}}' ?"
+  }
+}
