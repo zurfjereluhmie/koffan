@@ -74,6 +74,7 @@
   "offline": {
     "title": "Tryb offline",
     "message": "Jesteś w trybie offline. Wszystkie zmiany zostaną automatycznie zsynchronizowane po przywróceniu połączenia.",
-    "hint": "Możesz nadal dodawać i edytować produkty"
+    "hint": "Możesz nadal dodawać i zaznaczać produkty",
+    "action_blocked": "Ta akcja wymaga połączenia z internetem"
   }
 }

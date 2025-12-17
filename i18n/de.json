@@ -74,6 +74,7 @@
   "offline": {
     "title": "Offline-Modus",
     "message": "Sie sind offline. Alle Änderungen werden automatisch synchronisiert, wenn die Verbindung wiederhergestellt ist.",
-    "hint": "Sie können weiterhin Produkte hinzufügen und bearbeiten"
+    "hint": "Sie können weiterhin Produkte hinzufügen und abhaken",
+    "action_blocked": "Diese Aktion erfordert eine Internetverbindung"
   }
 }

@@ -1,3 +1,54 @@
+// Toast Notification System
+window.Toast = {
+    container: null,
+
+    init() {
+        this.container = document.getElementById('toast-container');
+    },
+
+    show(message, type = 'info', duration = 3000) {
+        if (!this.container) this.init();
+        if (!this.container) return;
+
+        const toast = document.createElement('div');
+        const baseClasses = 'px-4 py-2.5 rounded-xl shadow-lg text-sm font-medium flex items-center gap-2 transform transition-all duration-300 ease-out';
+        const typeClasses = {
+            warning: 'bg-rose-100 text-rose-700 border border-rose-200',
+            info: 'bg-stone-100 text-stone-700 border border-stone-200',
+            success: 'bg-emerald-100 text-emerald-700 border border-emerald-200'
+        };
+
+        toast.className = `${baseClasses} ${typeClasses[type] || typeClasses.info}`;
+        toast.innerHTML = `
+            <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                ${type === 'warning' ? '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636a9 9 0 010 12.728m0 0l-2.829-2.829m2.829 2.829L21 21M15.536 8.464a5 5 0 010 7.072m0 0l-2.829-2.829m-4.243 2.829a4.978 4.978 0 01-1.414-2.83m-1.414 5.658a9 9 0 01-2.167-9.238m7.824 2.167a1 1 0 111.414 1.414m-1.414-1.414L3 3m8.293 8.293l1.414 1.414"></path>' : ''}
+                ${type === 'success' ? '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>' : ''}
+                ${type === 'info' ? '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>' : ''}
+            </svg>
+            <span>${message}</span>
+        `;
+
+        // Start hidden
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(1rem)';
+
+        this.container.appendChild(toast);
+
+        // Animate in
+        requestAnimationFrame(() => {
+            toast.style.opacity = '1';
+            toast.style.transform = 'translateY(0)';
+        });
+
+        // Remove after duration
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateY(1rem)';
+            setTimeout(() => toast.remove(), 300);
+        }, duration);
+    }
+};
+
 // Shopping List Alpine.js Component
 function shoppingList() {
     return {
@@ -533,6 +584,10 @@ function shoppingList() {
 
         async deleteSelectedSections() {
             if (this.selectedSections.length === 0) return;
+            if (!this.isOnline) {
+                window.Toast.show(t('offline.action_blocked'), 'warning');
+                return;
+            }
 
             const confirmed = confirm(t('confirm.delete_sections', { count: this.selectedSections.length }));
             if (!confirmed) return;
@@ -572,6 +627,11 @@ function shoppingList() {
 
         async toggleUncertain() {
             if (!this.mobileActionItem) return;
+            if (!this.isOnline) {
+                window.Toast.show(t('offline.action_blocked'), 'warning');
+                this.mobileActionItem = null;
+                return;
+            }
             const itemId = this.mobileActionItem.id;
 
             // Mark as local action to prevent WebSocket race condition
@@ -606,6 +666,11 @@ function shoppingList() {
 
         async moveToSection(sectionId) {
             if (!this.mobileActionItem) return;
+            if (!this.isOnline) {
+                window.Toast.show(t('offline.action_blocked'), 'warning');
+                this.mobileActionItem = null;
+                return;
+            }
             const itemId = this.mobileActionItem.id;
             this.mobileActionItem = null;
 
@@ -638,6 +703,11 @@ function shoppingList() {
 
         async deleteItem() {
             if (!this.mobileActionItem) return;
+            if (!this.isOnline) {
+                window.Toast.show(t('offline.action_blocked'), 'warning');
+                this.mobileActionItem = null;
+                return;
+            }
             const confirmed = confirm(t('confirm.delete_item', { name: this.mobileActionItem.name }));
             if (!confirmed) return;
 
@@ -677,6 +747,10 @@ function shoppingList() {
 
         // Edit Item
         editItem(item) {
+            if (!this.isOnline) {
+                window.Toast.show(t('offline.action_blocked'), 'warning');
+                return;
+            }
             this.editingItem = item;
             this.editItemName = item.name;
             this.editItemDescription = item.description || '';
@@ -727,6 +801,10 @@ function shoppingList() {
 
         // Animated item move (swap two items in DOM)
         async moveItemAnimated(itemId, direction) {
+            if (!this.isOnline) {
+                window.Toast.show(t('offline.action_blocked'), 'warning');
+                return;
+            }
             const item = document.getElementById(`item-${itemId}`);
             if (!item) return;
 
@@ -994,6 +1072,67 @@ document.addEventListener('DOMContentLoaded', function() {
             event.preventDefault();
 
             const itemId = path.match(/\/items\/(\d+)\/toggle/)[1];
+            const itemEl = document.getElementById(`item-${itemId}`);
+
+            if (itemEl) {
+                // Check if item is currently completed (has pink checkbox bg)
+                const checkbox = itemEl.querySelector('button');
+                const isCompleted = checkbox && checkbox.classList.contains('bg-pink-400');
+
+                // Add pending sync styling
+                itemEl.classList.add('pending-sync');
+                itemEl.dataset.pendingSync = 'true';
+
+                // Toggle visual state
+                if (isCompleted) {
+                    // Uncomplete: change from pink checkbox to empty border
+                    if (checkbox) {
+                        checkbox.classList.remove('bg-pink-400', 'flex', 'items-center', 'justify-center');
+                        checkbox.classList.add('border-2', 'border-stone-300', 'hover:border-pink-400', 'hover:scale-110');
+                        checkbox.innerHTML = '';
+                    }
+                    // Change text style
+                    const textEl = itemEl.querySelector('.line-through');
+                    if (textEl) {
+                        textEl.classList.remove('line-through', 'text-stone-400', 'text-stone-300');
+                        textEl.classList.add('text-stone-700');
+                    }
+                    // Update stats
+                    const alpineData = Alpine.$data(document.querySelector('[x-data="shoppingList()"]'));
+                    if (alpineData) {
+                        alpineData.stats.completed = Math.max(0, alpineData.stats.completed - 1);
+                        alpineData.stats.percentage = Math.round((alpineData.stats.completed / alpineData.stats.total) * 100) || 0;
+                    }
+                } else {
+                    // Complete: change from empty border to pink checkbox
+                    if (checkbox) {
+                        checkbox.classList.remove('border-2', 'border-stone-300', 'hover:border-pink-400', 'hover:scale-110');
+                        checkbox.classList.add('bg-pink-400', 'flex', 'items-center', 'justify-center');
+                        checkbox.innerHTML = '<svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>';
+                    }
+                    // Change text style
+                    const textEl = itemEl.querySelector('.text-stone-700');
+                    if (textEl) {
+                        textEl.classList.remove('text-stone-700');
+                        textEl.classList.add('line-through', 'text-stone-400');
+                    }
+                    // Update stats
+                    const alpineData = Alpine.$data(document.querySelector('[x-data="shoppingList()"]'));
+                    if (alpineData) {
+                        alpineData.stats.completed++;
+                        alpineData.stats.percentage = Math.round((alpineData.stats.completed / alpineData.stats.total) * 100) || 0;
+                    }
+                }
+
+                // Add visual pending sync indicator (rose border)
+                itemEl.classList.add('bg-rose-50/40', 'border-l-2', 'border-rose-400');
+
+                // Animate checkbox
+                if (checkbox) {
+                    checkbox.classList.add('checkbox-pulse');
+                    setTimeout(() => checkbox.classList.remove('checkbox-pulse'), 300);
+                }
+            }
 
             // Queue for sync
             window.offlineStorage.queueAction({
@@ -1002,37 +1141,42 @@ document.addEventListener('DOMContentLoaded', function() {
                 method: 'POST'
             });
 
-            // Optimistic UI is already handled by existing code
             console.log('[Offline] Toggle queued:', itemId);
             return false;
         }
 
-        // Handle DELETE /items/:id offline
+        // Block DELETE /items/:id offline - show toast
         if (verb === 'DELETE' && path.match(/\/items\/\d+$/)) {
             event.preventDefault();
+            window.Toast.show(t('offline.action_blocked'), 'warning');
+            return false;
+        }
 
-            const itemId = path.match(/\/items\/(\d+)$/)[1];
-            const itemEl = document.getElementById(`item-${itemId}`);
+        // Block POST /items/:id/uncertain offline - show toast
+        if (verb === 'POST' && path.match(/\/items\/\d+\/uncertain/)) {
+            event.preventDefault();
+            window.Toast.show(t('offline.action_blocked'), 'warning');
+            return false;
+        }
 
-            if (itemEl) {
-                itemEl.classList.add('item-exit');
-                setTimeout(() => itemEl.remove(), 200);
-            }
+        // Block POST /items/:id/move offline - show toast
+        if (verb === 'POST' && path.match(/\/items\/\d+\/move$/)) {
+            event.preventDefault();
+            window.Toast.show(t('offline.action_blocked'), 'warning');
+            return false;
+        }
 
-            // Queue for sync
-            window.offlineStorage.queueAction({
-                type: 'delete_item',
-                url: path,
-                method: 'DELETE'
-            });
+        // Block POST /items/:id/move-up and move-down offline - show toast
+        if (verb === 'POST' && path.match(/\/items\/\d+\/move-(up|down)/)) {
+            event.preventDefault();
+            window.Toast.show(t('offline.action_blocked'), 'warning');
+            return false;
+        }
 
-            // Update stats optimistically
-            const alpineData = Alpine.$data(document.querySelector('[x-data="shoppingList()"]'));
-            if (alpineData) {
-                alpineData.stats.total = Math.max(0, alpineData.stats.total - 1);
-            }
-
-            console.log('[Offline] Delete queued:', itemId);
+        // Block section operations offline - show toast
+        if (path.startsWith('/sections')) {
+            event.preventDefault();
+            window.Toast.show(t('offline.action_blocked'), 'warning');
             return false;
         }
     });
@@ -1082,21 +1226,23 @@ function createOfflineItemHtml(id, name, description, sectionId) {
         : '';
 
     return `
-<div id="item-${id}" class="px-4 py-3 flex items-center gap-3 hover:bg-stone-50 transition-all group bg-amber-50/30 border-l-2 border-amber-400">
+<div id="item-${id}" class="px-4 py-3 flex items-center gap-3 hover:bg-stone-50 transition-all group bg-rose-50/40 border-l-2 border-rose-400 pending-sync" data-pending-sync="true">
     <!-- Checkbox (disabled offline) -->
     <div class="flex-shrink-0 w-5 h-5 rounded-full border-2 border-stone-200 bg-stone-50"></div>
 
     <!-- Content -->
     <div class="flex-1 min-w-0">
         <div class="flex items-center gap-2">
-            <span class="text-amber-500 text-xs" title="Oczekuje na synchronizację">⏳</span>
+            <svg class="w-3.5 h-3.5 text-rose-500 flex-shrink-0 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+            </svg>
             <p class="text-sm text-stone-700 truncate">${escapeHtml(name)}</p>
         </div>
         ${descHtml}
     </div>
 
     <!-- Offline indicator -->
-    <span class="text-xs text-amber-500 font-medium">offline</span>
+    <span class="text-xs text-rose-500 font-medium">sync</span>
 </div>`;
 }
 
@@ -1109,6 +1255,10 @@ function escapeHtml(text) {
 
 // Global function for uncertain toggle (called from onclick)
 window.toggleUncertain = async function(itemId) {
+    if (!navigator.onLine) {
+        window.Toast.show(t('offline.action_blocked'), 'warning');
+        return;
+    }
     const item = document.getElementById(`item-${itemId}`);
     if (!item) return;
 
@@ -1192,12 +1342,12 @@ window.toggleUncertain = async function(itemId) {
 
 // Pull to refresh
 (function() {
-    const ptrEl = document.getElementById('pull-to-refresh');
-    if (!ptrEl) return;
+    const spinner = document.getElementById('pull-to-refresh');
+    if (!spinner) return;
 
-    const spinner = ptrEl.querySelector('.pull-to-refresh-spinner');
-    const threshold = 80; // px to trigger refresh
-    const maxPull = 120; // max pull distance
+    const svg = spinner.querySelector('svg');
+    const threshold = 70; // px to trigger refresh
+    const maxPull = 140; // max pull distance
 
     let startY = 0;
     let currentY = 0;
@@ -1227,15 +1377,18 @@ window.toggleUncertain = async function(itemId) {
         // Only activate if pulling down from top
         if (pullDistance > 0 && window.scrollY === 0) {
             isPulling = true;
-            ptrEl.classList.add('pulling');
 
-            // Calculate height with resistance
-            const height = Math.min(pullDistance * 0.5, maxPull);
-            ptrEl.style.height = height + 'px';
+            // Calculate position with resistance (follows finger with dampening)
+            const pullWithResistance = Math.min(pullDistance * 0.5, maxPull);
 
-            // Rotate spinner based on pull
-            const rotation = (height / maxPull) * 360;
-            spinner.style.transform = `rotate(${rotation}deg)`;
+            // Position spinner to follow finger (offset a bit above finger)
+            const spinnerY = startY + pullWithResistance - 50;
+            spinner.style.top = Math.max(10, spinnerY) + 'px';
+            spinner.classList.add('visible');
+
+            // Rotate icon based on pull progress
+            const rotation = (pullWithResistance / threshold) * 360;
+            svg.style.transform = `rotate(${rotation}deg)`;
         }
     }, { passive: true });
 
@@ -1246,24 +1399,22 @@ window.toggleUncertain = async function(itemId) {
         }
 
         const pullDistance = currentY - startY;
+        const pullWithResistance = pullDistance * 0.5;
 
-        if (pullDistance * 0.5 >= threshold && !isRefreshing) {
-            // Trigger refresh
+        if (pullWithResistance >= threshold && !isRefreshing) {
+            // Trigger refresh - keep spinner visible at current position
             isRefreshing = true;
-            ptrEl.classList.remove('pulling');
-            ptrEl.classList.add('refreshing');
-            ptrEl.style.height = '50px';
+            spinner.classList.add('refreshing');
 
-            // Do the refresh
             doRefresh().finally(() => {
                 isRefreshing = false;
-                ptrEl.classList.remove('refreshing');
-                ptrEl.style.height = '0';
+                spinner.classList.remove('refreshing', 'visible');
+                spinner.style.top = '0';
             });
         } else {
-            // Cancel - snap back
-            ptrEl.classList.remove('pulling');
-            ptrEl.style.height = '0';
+            // Cancel - hide spinner
+            spinner.classList.remove('visible');
+            spinner.style.top = '0';
         }
 
         startY = 0;
@@ -1285,6 +1436,6 @@ window.toggleUncertain = async function(itemId) {
         }
 
         // Minimum spinner time for UX
-        await new Promise(r => setTimeout(r, 500));
+        await new Promise(r => setTimeout(r, 400));
     }
 })();

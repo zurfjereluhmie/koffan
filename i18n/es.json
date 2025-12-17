@@ -74,6 +74,7 @@
   "offline": {
     "title": "Modo sin conexión",
     "message": "Estás sin conexión. Todos los cambios se sincronizarán automáticamente cuando se restablezca la conexión.",
-    "hint": "Aún puedes agregar y editar productos"
+    "hint": "Aún puedes agregar y marcar productos",
+    "action_blocked": "Esta acción requiere conexión a internet"
   }
 }
