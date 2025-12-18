@@ -25,6 +25,17 @@ func getAppPassword() string {
 	return pass
 }
 
+// isSecureConnection checks if the request came over HTTPS
+// Works both directly and behind reverse proxies
+func isSecureConnection(c *fiber.Ctx) bool {
+	// Check X-Forwarded-Proto header (set by reverse proxies)
+	if c.Get("X-Forwarded-Proto") == "https" {
+		return true
+	}
+	// Check direct connection protocol
+	return c.Protocol() == "https"
+}
+
 func generateSessionID() string {
 	bytes := make([]byte, 32)
 	if _, err := rand.Read(bytes); err != nil {
@@ -87,7 +98,7 @@ func Login(c *fiber.Ctx) error {
 		Value:    sessionID,
 		Expires:  time.Now().Add(SessionDuration),
 		HTTPOnly: true,
-		Secure:   os.Getenv("APP_ENV") == "production",
+		Secure:   isSecureConnection(c),
 		SameSite: "Lax",
 	})
 
