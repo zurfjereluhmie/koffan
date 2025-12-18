@@ -121,7 +121,7 @@ docker run -d -p 80:80 -e APP_PASSWORD=your-password -v koffan-data:/data koffan
 
 ### Coolify
 
-1. Add new resource → **Docker Compose** → Select your Git repository
+1. Add new resource → **Docker Compose** → Select your Git repository or use `https://github.com/PanSalut/Koffan`
 2. Set domain in **Domains** section
 3. Enable **Connect to Predefined Network** in Advanced settings
 4. Add environment variable `APP_PASSWORD` with your password
